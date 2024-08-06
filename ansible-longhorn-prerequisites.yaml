@@ -1,0 +1,28 @@
+---
+- name: Preparing for longhorn installation
+  hosts: k8s-cluster
+  become: yes
+  tasks:
+  - name: Install longhorn dependencies
+    ansible.builtin.dnf:
+      name: 
+        - iscsi-initiator-utils
+        - nfs-utils
+        - cryptsetup
+      state: latest
+
+  - name: Enable service iscsi, and start it
+    ansible.builtin.service:
+      name: iscsi
+      state: started
+      enabled: yes
+
+# - name: Install the longhorn helm chart
+#   hosts: localhost
+#   tasks:
+#   - name: Deploy latest version of longhorn chart inside longhorn-system namespace
+#     kubernetes.core.helm:
+#       name: longhorn
+#       chart_ref: longhorn/longhorn
+#       release_namespace: longhorn-system
+#       create_namespace: yes
