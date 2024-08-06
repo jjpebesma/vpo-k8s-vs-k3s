@@ -12,8 +12,8 @@ This repository is for a school experiment I had to conduct. It contains all of 
 1. Edit the `cloud-image.sh` script. Change the storage (nvme0n1p1) to the proxmox-storage you wish to use (most-likely "local").
 2. Copy the script to your Proxmox server and run it.
 3. [Create an API-key for Terraform](https://youtu.be/dvyeoDBUtsU?feature=shared&t=166) to automatically create your VM's
-4. Create a c`redentials.auto.tfvars` file in the terraform directory that looks like the following and change the values accordingly:
-```json
+4. Create a `credentials.auto.tfvars` file in the terraform directory that looks like the following and change the values accordingly:
+```hcl
 pm_api_url = "https://your-proxmox-url:8006"
 pm_api_token_secret = "your-terraform-api-key"
 pm_api_token_id = "terraform-prov@pve!terraform" 
@@ -24,11 +24,12 @@ ciuser = "your-username"
 ```
 5. Change the `kubernetes.tf` file according to your needs. (Storage, IP-addresses etc)
 6. Go in to the terraform folder, then type: `terraform init`, `terraform apply`, your vm's should be created.
-7. Clone the [kubespray github repository](https://github.com/kubernetes-sigs/kubespray) with release v2.25.0. Change directory to the repository and type: `cp -rfp inventory/sample inventory/mycluster`. Copy `hosts.yaml` from this repository's k8s folder to `kubespray/inventory/mycluster/hosts.yaml`. Copy `k8s-cluster.yml` to `kubespray/inventory/mycluster/group_vars/k8s_cluster/k8s-cluster.yaml`.
-8. Clone the [k3s-ansible](https://github.com/k3s-io/k3s-ansible) and place `inventory.yml` from this repository's k3s folder in `k3s-ansible/inventory.yml`.
-9. Go through the prerequisites in the k3s-ansible and kubespray repo
-10. Install paramiko for ansible to prevent some errors (optional)
-11. Go through [the prerequisites of longhorn](https://longhorn.io/docs/1.6.2/deploy/install/#installation-requirements) to be able to install longhorn. (An ansible playbook is provided that already does this, create your own inventory and run it or manually execute the steps.)
+7. Change the k3s and k8s files according to your needs.
+8. Clone the [kubespray github repository](https://github.com/kubernetes-sigs/kubespray) with release v2.25.0. Change directory to the repository and type: `cp -rfp inventory/sample inventory/mycluster`. Copy `hosts.yaml` from this repository's k8s folder to `kubespray/inventory/mycluster/hosts.yaml`. Copy `k8s-cluster.yml` to `kubespray/inventory/mycluster/group_vars/k8s_cluster/k8s-cluster.yaml`.
+9. Clone the [k3s-ansible](https://github.com/k3s-io/k3s-ansible) and place `inventory.yml` from this repository's k3s folder in `k3s-ansible/inventory.yml`.
+10. Go through the prerequisites in the k3s-ansible and kubespray repo
+11. Install paramiko for ansible to prevent some errors (optional)
+12. Go through [the prerequisites of longhorn](https://longhorn.io/docs/1.6.2/deploy/install/#installation-requirements) to be able to install longhorn. (An ansible playbook is provided that already does this, create your own inventory and run it or manually execute the steps.)
 
 # Experiment
 - Create the k3s cluster by typing `ansible-playbook playbooks/site.yml -i inventory.yml` in the k3s-ansible repository.
